@@ -76,7 +76,7 @@ function DeveloperSpotlight() {
               <div className="relative mx-auto mt-6 h-72 w-72 overflow-hidden rounded-full border-4 border-cyan-400/20 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.95),rgba(191,219,254,0.75)_35%,rgba(30,41,59,0.15)_100%)] shadow-[0_0_40px_rgba(34,211,238,0.14)] sm:h-80 sm:w-80">
                 {!imageFailed && (
                   <img
-                    src="/developer-photo.png"
+                    src={`${import.meta.env.BASE_URL}developer-photo.png`}
                     alt="Project developer portrait"
                     className={`h-full w-full object-cover transition duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                     onLoad={() => setImageLoaded(true)}
