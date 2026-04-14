@@ -8,6 +8,7 @@ import QuizSection from './sections/QuizSection'
 import ResultSection from './sections/ResultSection'
 import SlidesSection from './sections/SlidesSection'
 import ChatBot from './components/ChatBot'
+import FloatingIDE from './components/FloatingIDE'
 
 const STAGES = {
   LANDING: 'landing',
@@ -86,6 +87,7 @@ function App() {
           </motion.div>
         </AnimatePresence>
       </main>
+      <FloatingIDE />
       <ChatBot />
     </div>
   )
