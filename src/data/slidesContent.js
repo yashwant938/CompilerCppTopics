@@ -72,7 +72,8 @@ export const slidesContent = [
       'insert(iterator position, const T& value): Inserts before position.',
       'erase(iterator position) or erase(iterator first, iterator last): Removes one or more elements.',
       'clear(): Removes all elements.',
-      'swap(vector& x): Swaps contents with another vector.'
+      'swap(vector& x): Swaps contents with another vector.',
+      'shrink_to_fit(): Requests the container to reduce its capacity to fit its size.'
     ]
   },
   {

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { memoryDemos } from '../data/memoryDemos'
+import MemoryVisualizer from '../components/MemoryVisualizer'
 
 const PlayIcon = () => <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5"><path d="M8 5v14l11-7z" /></svg>;
 const PauseIcon = () => <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /></svg>;
@@ -276,6 +278,10 @@ function BarChartVisualizer({ values, pointers, capacity }) {
 }
 
 function VisualPanel({ state }) {
+  if (state.kind.startsWith('memory-') || state.kind === 'system-memory') {
+    return <MemoryVisualizer state={state} />;
+  }
+
   if (['vector', 'stack', 'queue', 'priority'].includes(state.kind)) {
     const pointers = [];
     if (state.kind === 'vector' && state.pointer !== null) {
@@ -416,10 +422,10 @@ function VisualPanel({ state }) {
   return null
 }
 
-function DemoSelector({ onSelect }) {
+function DemoSelector({ onSelect, availableDemos }) {
   return (
     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 pt-6">
-      {demos.map((item) => (
+      {availableDemos.map((item) => (
         <button
           key={item.id}
           type="button"
@@ -435,12 +441,14 @@ function DemoSelector({ onSelect }) {
 }
 
 function AnimationSection() {
+  const [tab, setTab] = useState('logical'); // 'logical' or 'memory'
   const [demoId, setDemoId] = useState(null)
   const [stepIndex, setStepIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const [speed, setSpeed] = useState(1);
 
-  const demo = demos.find((item) => item.id === demoId) || null
+  const activeDemos = tab === 'logical' ? demos : memoryDemos;
+  const demo = activeDemos.find((item) => item.id === demoId) || null
   const step = demo ? demo.steps[stepIndex] : null
   const totalSteps = demo ? demo.steps.length : 0;
 
@@ -480,10 +488,26 @@ function AnimationSection() {
           <div>
              <h2 className="text-3xl font-bold text-white tracking-tight">Animation Lab</h2>
              <p className="mt-3 text-slate-400">
-               Interactive visualizer for standard data structures and algorithms.
+               Interactive visualizer for standard data structures and memory architecture.
              </p>
           </div>
-          <DemoSelector onSelect={selectDemo} />
+
+          <div className="flex space-x-2 bg-[#121212] p-1.5 rounded-xl w-full max-w-md mt-6 border border-slate-800">
+             <button 
+                onClick={() => setTab('logical')}
+                className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all ${tab === 'logical' ? 'bg-[#252526] text-[#00c8e5] shadow-md border border-slate-700' : 'text-slate-500 hover:text-slate-300'}`}
+             >
+                Logical Flow
+             </button>
+             <button 
+                onClick={() => setTab('memory')}
+                className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all ${tab === 'memory' ? 'bg-[#252526] text-[#00c8e5] shadow-md border border-slate-700' : 'text-slate-500 hover:text-slate-300'}`}
+             >
+                Raw Memory Architecture
+             </button>
+          </div>
+
+          <DemoSelector onSelect={selectDemo} availableDemos={activeDemos} />
         </>
       ) : (
         <div className="flex flex-col h-[85vh]">
