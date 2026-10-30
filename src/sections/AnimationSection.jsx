@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { memoryDemos } from '../data/memoryDemos'
 import MemoryVisualizer from '../components/MemoryVisualizer'
+import VectorTrace from '../components/VectorTrace'
 
 const PlayIcon = () => <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5"><path d="M8 5v14l11-7z" /></svg>;
 const PauseIcon = () => <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /></svg>;
@@ -46,7 +47,7 @@ const demos = [
       { highlightLine: 11, note: 'Traversal walks left to right through the remaining values.', state: { kind: 'vector', values: [10, 15], pointer: 0, capacity: 5, label: 'Traversing' } },
       { highlightLine: 12, note: 'clear() removes all elements.', state: { kind: 'vector', values: [], pointer: null, capacity: 5, label: 'Cleared' } },
       { highlightLine: 13, note: 'resize(7, 100) expands size to 7, filling new elements with 100.', state: { kind: 'vector', values: [100, 100, 100, 100, 100, 100, 100], pointer: null, capacity: 7, label: 'Resized to 7' } },
-      { highlightLine: 14, note: 'shrink_to_fit() adjusts capacity to match current size.', state: { kind: 'vector', values: [100, 100, 100, 100, 100, 100, 100], pointer: null, capacity: 7, label: 'Capacity shrunk' } }
+      { highlightLine: 14, note: 'shrink_to_fit() requests reduced capacity; the implementation may keep it unchanged.', state: { kind: 'vector', values: [100, 100, 100, 100, 100, 100, 100], pointer: null, capacity: 7, label: 'Capacity shrunk' } }
     ]
   },
   {
@@ -488,9 +489,11 @@ function AnimationSection() {
           <div>
              <h2 className="text-3xl font-bold text-white tracking-tight">Animation Lab</h2>
              <p className="mt-3 text-slate-400">
-               Interactive visualizer for standard data structures and memory architecture.
+               The diagrams below are teaching simulations, not recordings of your program. Try the live trace to see values emitted by a real C++ run.
              </p>
           </div>
+
+          <VectorTrace />
 
           <div className="flex space-x-2 bg-[#121212] p-1.5 rounded-xl w-full max-w-md mt-6 border border-slate-800">
              <button 
@@ -521,7 +524,7 @@ function AnimationSection() {
                   ← Back
                 </button>
                 <div className="px-3 py-1.5 text-xs font-semibold text-slate-400 bg-[#252525] rounded-md border border-slate-700 shadow-inner">
-                   {demo.title}
+                   {demo.title} · Simulation
                 </div>
              </div>
              

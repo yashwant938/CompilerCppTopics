@@ -25,7 +25,7 @@ There is no application backend. Gemini receives lesson text as a system instruc
 
 ## Engineering Highlights
 
-- Data-driven visual steps connect highlighted C++ statements to illustrative container and memory state.
+- Data-driven visual steps connect highlighted C++ statements to illustrative container and memory state. Each animation is labelled as a simulation.
 - Editable C++ examples separate compiler messages from program output; a floating IDE also offers C, Java, and Python through Wandbox.
 - A Gemini assistant combines conversation history with the lesson material. Rendered Markdown is sanitized with DOMPurify.
 - Timed quizzes provide feedback and store the top local results in `localStorage`.
@@ -59,9 +59,15 @@ For optional chat, enter your own Gemini key in the assistant settings. The key 
 
 Available project checks are `npm run lint` and `npm run build`; `npm run preview` serves the build locally. No automated application test suite is included.
 
+## Live vector trace
+
+In Animation Lab, select **Run live trace**. An instrumented, fixed C++ example is sent to Wandbox and its printed vector values, size, and capacity are displayed step by step. Capacity is reported by the compiler run, not hard-coded, and may vary by implementation. The code is visible in the interface. This is explicit program output, not a debugger trace, a memory-address trace, or a trace of arbitrary user programs. If the compiler is unavailable, the interface reports an error rather than showing simulated output.
+
+Run the trace parser checks with `node --test tests/vectorTrace.test.js`. The compiler feature requires network access to Wandbox.
+
 ## Example
 
-Open the floating IDE, keep its default C++ program, and click **Run Code**. A successful Wandbox response displays `Hello C++!`. Then use the vector animation to step through `reserve`, `push_back`, insertion, and erasure. The animation state is illustrative, not a trace captured from that compiler execution.
+Open the floating IDE, keep its default C++ program, and click **Run Code**. A successful Wandbox response displays `Hello C++!`. Then use the vector animation to step through `reserve`, `push_back`, insertion, and erasure. The animation state is illustrative, not a trace captured from that compiler execution. The separate live vector trace uses the instrumented program output described above.
 
 ## Engineering Challenges
 
