@@ -57,7 +57,7 @@ Open the HTTPS URL printed by Vite, including `/CompilerCppTopics/`. The develop
 
 For optional chat, enter your own Gemini key in the assistant settings. The key is held in browser state. The alternative `VITE_GEMINI_API_KEY` setting is bundled into frontend code and is not a server-side secret; do not put a shared production key there. A backend credential boundary is a future improvement.
 
-Available project checks are `npm run lint` and `npm run build`; `npm run preview` serves the build locally. No automated application test suite is included.
+Run `npm run build` for a production build and `node --test tests/vectorTrace.test.js` for the focused trace-parser checks. `npm run preview` serves the build locally. The existing full-project `npm run lint` currently reports pre-existing errors; the new trace files pass ESLint individually. There is no comprehensive automated application test suite yet.
 
 ## Live vector trace
 
